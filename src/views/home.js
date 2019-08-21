@@ -22,7 +22,6 @@ function Home() {
 
   React.useEffect(() => {
     getWeatherLocation(position).then(weather => {
-      console.log(weather);
       setWeatherLocation(weather);
       setWeather(weather.weather[0]);
     });

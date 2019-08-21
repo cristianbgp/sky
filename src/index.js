@@ -23,7 +23,9 @@ function App() {
   );
 }
 
+console.log("by @cristianbgp 🤓");
+
 const rootElement = document.getElementById("root");
 render(<App />, rootElement);
 
-serviceWorker.unregister();
+serviceWorker.register();
