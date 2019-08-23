@@ -1,6 +1,6 @@
 import { apiURL } from "../utils";
 
-async function getWeatherLocation(position = { latitude: 0, longitude: 0 }) {
+async function getWeatherLocation(position) {
   const response = await fetch(
     `${apiURL}/weather?lat=${position.latitude}&lon=${
       position.longitude

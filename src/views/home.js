@@ -2,12 +2,15 @@
 import React from "react";
 import { getWeatherLocation } from "../services/weather";
 import { jsx } from "@emotion/core";
-import { Title } from "../components/ui";
+import { Title, MapPin } from "../components/ui";
+
+const isChrome =
+  !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 
 function Home() {
   const [weatherLocation, setWeatherLocation] = React.useState({});
   const [weather, setWeather] = React.useState({});
-  const [position, setPosition] = React.useState();
+  const [position, setPosition] = React.useState({ latitude: 0, longitude: 0 });
   const [backgroundApp, setBackgroundApp] = React.useState("#ffffff");
   const [colorApp, setColorApp] = React.useState("#000000");
 
@@ -49,6 +52,21 @@ function Home() {
     transition: "background-color 0.5s ease"
   };
 
+  if (position.latitude === 0)
+    return (
+      <div
+        css={{
+          ...styleContainer,
+          justifyContent: "center",
+          backgroundColor: "#ffffff",
+          color: "#000000"
+        }}
+      >
+        <MapPin css={{ margin: "1em" }} />
+        <p css={{ fontSize: "0.8em" }}>Please allow location access</p>
+      </div>
+    );
+
   return (
     <div css={styleContainer}>
       <Title>{weatherLocation.name}</Title>
@@ -60,10 +78,17 @@ function Home() {
           justifyContent: "center"
         }}
       >
-        {weather.icon && (
+        {weather.icon && isChrome ? (
           <img
             src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
             loading="lazy"
+            alt="weather status"
+            height="100px"
+            width="100px"
+          />
+        ) : (
+          <img
+            src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
             alt="weather status"
             height="100px"
             width="100px"
